@@ -1,0 +1,30 @@
+name: Portfolio 
+on:
+  push:
+    branches:
+    - main
+    - master
+  pull_request:
+    types:
+      - closed  
+  branch_protection_rule:
+    - created
+    - edited
+    - deleted
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+      
+    - name: configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+        
+    - name: Deploy my website into s3 bucket
+      run: aws s3 sync . s3://pg-portfolio --delete
+      
