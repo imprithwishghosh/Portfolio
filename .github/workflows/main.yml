@@ -1,16 +1,11 @@
 name: Portfolio 
+
+
 on:
   push:
     branches:
     - main
     - master
-  pull_request:
-    types:
-      - closed  
-  branch_protection_rule:
-    - created
-    - edited
-    - deleted
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
